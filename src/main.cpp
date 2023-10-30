@@ -48,7 +48,7 @@ void readDataFromFile( std::string filepath, PointCloud<double> &cloud )
 void writeOutPlanes( string filePath, std::vector<PLANE> &planes, double scale )
 {
 	// write out bounding polygon result
-	string fileEdgePoints = filePath + "planes.txt";
+	string fileEdgePoints = filePath + "planes.xyz";
 	FILE *fp2 = fopen( fileEdgePoints.c_str(), "w");
 	for (int p=0; p<planes.size(); ++p)
 	{
@@ -84,7 +84,7 @@ void writeOutPlanes( string filePath, std::vector<PLANE> &planes, double scale )
 void writeOutLines( string filePath, std::vector<std::vector<cv::Point3d> > &lines, double scale )
 {
 	// write out bounding polygon result
-	string fileEdgePoints = filePath + "lines.txt";
+	string fileEdgePoints = filePath + "lines.xyz";
 	FILE *fp2 = fopen( fileEdgePoints.c_str(), "w");
 	for (int p=0; p<lines.size(); ++p)
 	{
@@ -112,21 +112,21 @@ void writeOutLines( string filePath, std::vector<std::vector<cv::Point3d> > &lin
 }
 
 
-void main() 
+int main(void) 
 {
-	string fileData = "D://Facade//data.txt";
-	string fileOut  = "D://Facade//data";
-
+	string fileData = "/home/jihyun/pcd/vision_tower_cornerMap.xyz";
+	string fileOut  = "/home/jihyun/LineDetection_result/vision_tower_cornerMap";
+	
 	// read in data
 	PointCloud<double> pointData; 
 	readDataFromFile( fileData, pointData );
 
-	int k = 20;
+	int k = 20;  
 	LineDetection3D detector;
 	std::vector<PLANE> planes;
 	std::vector<std::vector<cv::Point3d> > lines;
 	std::vector<double> ts;
-	detector.run( pointData, k, planes, lines, ts );
+	detector.run( pointData, k, planes, lines, ts );   // What k means?
 	cout<<"lines number: "<<lines.size()<<endl;
 	cout<<"planes number: "<<planes.size()<<endl;
 	
